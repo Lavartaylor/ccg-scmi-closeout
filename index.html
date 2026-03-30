@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCG Closeout Package</title>
+<link rel="stylesheet" href="https://use.typekit.net/hdp3pln.css">
+<style>
+/* ============================================================
+   CLOSEOUT PACKAGE — CCG
+   Edit the CONFIG object in <script> to customize per-project.
+   ============================================================ */
+
+/* CCG Official Fonts via Adobe Typekit: Seasons (display), Neue Regrade (body) */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* CCG Official Brand — Green Scheme Dark Mode */
+  --bg-primary: #0D1414;
+  --bg-secondary: #222A2C;
+  --bg-card: #1a2224;
+  --bg-card-hover: #222A2C;
+  --text-primary: #ffffff;
+  --text-secondary: #9DB6B5;
+  --text-muted: #6a8886;
+  --accent: #537F7B;
+  --accent-secondary: #9DB6B5;
+  --accent-hover: #5e918d;
+  --border-color: rgba(83,127,123,0.2);
+  --border-hover: rgba(83,127,123,0.4);
+  --shadow: 0 4px 32px rgba(0,0,0,0.5);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font-display: 'the-seasons', Georgia, serif;
+  --font-body: 'neulis-neue', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* ── NAV ── */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,20,20,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.nav-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search-wrapper {
+  position: relative;
+}
+
+.search-input {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 8px 16px 8px 38px;
+  color: var(--text-primary);
+  font-size: 14px;
+  width: 200px;
+  outline: none;
+  transition: all 0.3s;
+  font-family: var(--font-body);
+}
+
+.search-input:focus {
+  width: 300px;
+  border-color: var(--accent);
+  background: var(--bg-card);
+}
+
+.search-input::placeholder { color: var(--text-muted); }
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 420px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  max-height: 400px;
+  overflow-y: auto;
+  display: none;
+  z-index: 200;
+}
+
+.search-results.active { display: block; }
+
+.search-result-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:hover { background: var(--bg-card-hover); }
+
+.search-result-item .result-title {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.search-result-item .result-category {
+  font-size: 12px;
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+.search-no-results {
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 20px;
+  padding: 4px;
+}
+
+/* ── MAIN LAYOUT ── */
+.main {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 32px 40px 80px;
+}
+
+/* ── TOP ROW: Hero + Care ── */
+.top-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13,20,20,0.92) 0%, rgba(13,20,20,0.45) 50%, rgba(13,20,20,0.12) 100%);
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-tag {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-tag::before {
+  content: '';
+  width: 3px;
+  height: 20px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 500;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.hero p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 520px;
+  line-height: 1.6;
+}
+
+.hero-watermark {
+  position: absolute;
+  bottom: 20px;
+  right: 24px;
+  font-size: 48px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.06);
+  font-family: var(--font-display);
+  z-index: 1;
+  letter-spacing: 4px;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 32px;
+  border: 1px solid var(--border-color);
+}
+
+.card-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid rgba(83,127,123,0.4);
+  border-radius: 10px;
+  margin-bottom: 16px;
+  color: var(--accent);
+  font-size: 18px;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ── LINK ROWS ── */
+.link-list { list-style: none; }
+
+.link-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-top: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.link-item:hover { color: var(--accent); }
+
+.link-item .link-text {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.link-item .link-icon {
+  font-size: 14px;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.link-item:hover .link-icon { color: var(--accent); }
+
+button.link-item {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-top: 1px solid var(--border-color);
+  border-radius: 0;
+  outline: none;
+  font-family: var(--font-body);
+  -webkit-appearance: none;
+}
+
+/* ── BOTTOM ROW ── */
+.bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 24px;
+}
+
+/* ── CONTACT CARD ── */
+.contact-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.contact-photo-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.contact-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.contact-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card-hover));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  color: var(--text-muted);
+  position: relative;
+}
+
+.contact-info-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(13,20,20,0.97), rgba(13,20,20,0.3) 70%, transparent);
+}
+
+.contact-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.contact-status::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+.contact-name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.contact-role {
+  font-size: 13px;
+  color: var(--accent);
+}
+
+.contact-actions {
+  padding: 0 20px 20px;
+  margin-top: auto;
+}
+
+.contact-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-top: 1px solid var(--border-color);
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 14px;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  width: 100%;
+  font-family: var(--font-body);
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.contact-action-btn:first-child { border-top: none; margin-top: 8px; }
+.contact-action-btn:hover { color: var(--accent); }
+
+.contact-action-btn .link-icon {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* ── SCROLL HINT ── */
+.scroll-hint {
+  text-align: center;
+  margin-top: 32px;
+  color: var(--text-muted);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.scroll-hint svg { opacity: 0.5; }
+
+/* ── CONTACT MODAL ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 40px;
+  max-width: 420px;
+  width: 90%;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modal h2 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.modal .modal-role {
+  color: var(--accent);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.modal-field {
+  margin-bottom: 16px;
+}
+
+.modal-field label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.modal-field span {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.modal-field a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.modal-field a:hover { text-decoration: underline; }
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-body);
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.btn-primary:hover { background: var(--accent-hover); }
+
+.btn-secondary {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover { background: var(--bg-card-hover); }
+
+/* ── VIDEO MODAL ── */
+.video-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.video-modal-overlay.active { display: flex; }
+
+.video-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.video-modal-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--text-primary);
+}
+
+.video-modal-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+  transition: color 0.2s;
+}
+
+.video-modal-close:hover { color: var(--text-primary); }
+
+.video-modal-player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #000;
+}
+
+.video-modal-player iframe,
+.video-modal-player video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ── IMAGE SECTION (for hero with no real image) ── */
+.hero-placeholder {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1a2a28 0%, #162020 40%, #0D1414 100%);
+  z-index: 0;
+}
+
+.hero-placeholder::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13,20,20,0.92) 0%, rgba(13,20,20,0.3) 60%, rgba(13,20,20,0.1) 100%);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .bottom-row { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .nav { padding: 12px 20px; }
+  .main { padding: 20px; }
+  .top-row { grid-template-columns: 1fr; }
+  .bottom-row { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 32px; }
+  .search-input:focus { width: 200px; }
+  .search-results { width: 300px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVIGATION
+     ═══════════════════════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-logo" id="navLogo"><img src="ccg-logo.png" alt="CCG"></div>
+  <div class="nav-right">
+    <div class="search-wrapper">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="Search" autocomplete="off">
+      <div class="search-results" id="searchResults"></div>
+    </div>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">&#9788;</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN CONTENT — Built dynamically from CONFIG
+     ═══════════════════════════════════════════════════════════ -->
+<div class="main" id="mainContent"></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     VIDEO MODAL
+     ═══════════════════════════════════════════════════════════ -->
+<div class="video-modal-overlay" id="videoModal">
+  <div class="video-modal">
+    <div class="video-modal-header">
+      <span class="video-modal-title" id="videoModalTitle"></span>
+      <button class="video-modal-close" onclick="closeVideoModal()">&times;</button>
+    </div>
+    <div class="video-modal-player" id="videoModalPlayer"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CONTACT MODAL
+     ═══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeContactModal()">&times;</button>
+    <h2 id="modalName"></h2>
+    <div class="modal-role" id="modalRole"></div>
+    <div id="modalFields"></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="downloadVCard()">Save Contact</button>
+      <button class="btn btn-secondary" onclick="closeContactModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ╔════════════════════════════════════════════════════════════╗
+// ║  PROJECT CONFIG — Edit this object to create new versions ║
+// ╚════════════════════════════════════════════════════════════╝
+
+const CONFIG = {
+
+  // ── Branding ──
+  companyLogo: "ccg-logo.png",
+  watermark: "",   // Building images already carry VCBO attribution
+
+  // ── Project Info ──
+  projectName: "JAMES LeVOY SORENSON CENTER FOR MEDICAL INNOVATION",
+  heroTitle: "Welcome to Your\nCloseout Package",
+  heroDescription: "Everything you need for your new workspace — warranty information, care guides, adjustment videos, design documentation, and dedicated support.",
+  heroImage: "https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/sign/make-5cf288b6-ccg-assets/projects/project-scmi-photo-1.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lODgyNTIxOC01YzI4LTQ2ZTItYjBjMS04ZmE4ZWMzZWUyNDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYWtlLTVjZjI4OGI2LWNjZy1hc3NldHMvcHJvamVjdHMvcHJvamVjdC1zY21pLXBob3RvLTEuanBnIiwiaWF0IjoxNzc0OTA4NzY3LCJleHAiOjE4MDY0NDQ3Njd9.Sx_3VPjXCAp2aBlfgVn4rNrrr4wRb3fduuE4PEov1R8",
+
+  // ── Contact Person ──
+  contact: {
+    name: "Kristy Merrill",
+    role: "Director of Key Accounts",
+    status: "Available",
+    photo: "https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/sign/make-5cf288b6-ccg-assets/team/team-kristy-merrill.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lODgyNTIxOC01YzI4LTQ2ZTItYjBjMS04ZmE4ZWMzZWUyNDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYWtlLTVjZjI4OGI2LWNjZy1hc3NldHMvdGVhbS90ZWFtLWtyaXN0eS1tZXJyaWxsLnBuZyIsImlhdCI6MTc3NDkwODgwMiwiZXhwIjoxODA2NDQ0ODAyfQ.ryqS4gG4E4sUyUZ7nc5uWexHdjFgmS2xF8QwTnfsVq4",
+    email: "kmerrill@ccgslc.com",
+    phone: "408-600-2788",
+    company: "CCG",
+    website: "https://ccgslc.com",
+  },
+
+  // ── Sections ──
+  sections: [
+
+    // ── Care & Maintenance ──
+    {
+      title: "Care & Maintenance",
+      icon: "care",
+      description: "Find care and maintenance guides for your Haworth and Tuohy furniture below.",
+      type: "links",
+      position: "top-right",
+      links: [
+        { text: "Haworth Care & Maintenance Standards", url: "https://www.haworth.com/content/dam/digital/north-american-assets/order-support/service-and-maintenance/haworth-care-maintenance-standards.pdf", type: "external" },
+        { text: "Tuohy Furniture Care & Cleaning", url: "https://www.tuohy.com/care-cleaning/", type: "external" },
+      ]
+    },
+
+    // ── Contact Card ──
+    {
+      type: "contact",
+      position: "bottom",
+    },
+
+    // ── Adjustment Guides ──
+    {
+      title: "Adjustment Guides",
+      icon: "video",
+      type: "links",
+      position: "bottom",
+      links: [
+        { text: "Fern Chair — Seat Adjustments", url: "https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/public/Videos/haworth_-_fern_chair_-_seat_adjustments%20(720p).mp4", type: "video" },
+        { text: "Height-Adjustable Desk Guide", url: "https://www.youtube.com/watch?v=dummyplaceholder", type: "video" },
+      ]
+    },
+
+    // ── Design Package ──
+    {
+      title: "Design Package",
+      icon: "download",
+      type: "image",
+      position: "bottom",
+      image: "https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/sign/make-5cf288b6-ccg-assets/projects/project-scmi-photo-2.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lODgyNTIxOC01YzI4LTQ2ZTItYjBjMS04ZmE4ZWMzZWUyNDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYWtlLTVjZjI4OGI2LWNjZy1hc3NldHMvcHJvamVjdHMvcHJvamVjdC1zY21pLXBob3RvLTIuanBnIiwiaWF0IjoxNzc0OTA4NzY3LCJleHAiOjE4MDY0NDQ3Njd9.KqI2Ya4AE3jTO5X72FtPdGuFj3BOjfpzTW286xA7ULI",
+      downloadUrl: "https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/public/pdfs/scmi-design-package.pdf",
+      downloadText: "Download Design Package",
+    },
+
+    // ── Warranty Information ──
+    {
+      title: "Warranty Information",
+      icon: "warranty",
+      type: "links",
+      position: "bottom",
+      links: [
+        { text: "Haworth Furniture Warranty", url: "https://www.haworth.com/content/dam/digital/north-american-assets/order-support/warranties/haworth-north-america-warranty.pdf", type: "external" },
+        { text: "Tuohy Furniture Warranty", url: "https://www.tuohy.com/warranty/", type: "external" },
+        { text: "Schedule Warranty Walk", url: "mailto:kmerrill@ccgslc.com?subject=Warranty Walk Request — " + encodeURIComponent("James LeVoy Sorenson Center for Medical Innovation"), type: "email" },
+        { text: "Submit Warranty Claim", url: "mailto:kmerrill@ccgslc.com?subject=Warranty Claim — " + encodeURIComponent("James LeVoy Sorenson Center for Medical Innovation"), type: "email" },
+      ]
+    },
+  ]
+};
+
+
+// ╔════════════════════════════════════════════════════════════╗
+// ║  RENDER ENGINE — Builds UI from CONFIG                    ║
+// ╚════════════════════════════════════════════════════════════╝
+
+const ICONS = {
+  care: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12h6M12 9v6"/></svg>`,
+  video: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg>`,
+  download: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>`,
+  warranty: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>`,
+  external: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>`,
+  internal: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
+  video: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16"/></svg>`,
+  email: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>`,
+  emailAction: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>`,
+  saveContact: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>`,
+};
+
+function getLinkIcon(type) {
+  return ICONS[type] || ICONS.external;
+}
+
+function buildHero() {
+  const bgStyle = CONFIG.heroImage
+    ? `<div class="hero-bg" style="background-image:url('${CONFIG.heroImage}')"></div>`
+    : `<div class="hero-placeholder"></div>`;
+
+  const titleHtml = CONFIG.heroTitle.replace(/\n/g, '<br>');
+
+  return `
+    <div class="hero">
+      ${bgStyle}
+      <div class="hero-content">
+        <div class="hero-tag">${CONFIG.projectName}</div>
+        <h1>${titleHtml}</h1>
+        <p>${CONFIG.heroDescription}</p>
+      </div>
+      <div class="hero-watermark">${CONFIG.watermark}</div>
+    </div>`;
+}
+
+function buildLinkCard(section) {
+  const iconHtml = ICONS[section.icon] || '';
+  const descHtml = section.description ? `<p class="card-desc">${section.description}</p>` : '';
+
+  const linksHtml = section.links.map(link => {
+    if (link.type === 'video') {
+      return `<button class="link-item" onclick="openVideoModal('${link.text.replace(/'/g,"\\'")}','${link.url}')" data-searchable>
+        <span class="link-text">${link.text}</span>
+        <span class="link-icon">${getLinkIcon('video')}</span>
+      </button>`;
+    }
+    return `<a class="link-item" href="${link.url}" target="${link.type === 'email' ? '_self' : '_blank'}" rel="noopener" data-searchable>
+      <span class="link-text">${link.text}</span>
+      <span class="link-icon">${getLinkIcon(link.type)}</span>
+    </a>`;
+  }).join('');
+
+  return `
+    <div class="card">
+      <div class="card-icon">${iconHtml}</div>
+      <h2 class="card-title">${section.title}</h2>
+      ${descHtml}
+      <div class="link-list">${linksHtml}</div>
+    </div>`;
+}
+
+function buildContactCard() {
+  const c = CONFIG.contact;
+  const initials = c.name.split(' ').map(n => n[0]).join('');
+
+  const photoHtml = c.photo
+    ? `<div class="contact-photo-wrap"><img class="contact-photo" src="${c.photo}" alt="${c.name}"><div class="contact-info-overlay"><div class="contact-status">${c.status}</div><div class="contact-name">${c.name}</div><div class="contact-role">${c.role}</div></div></div>`
+    : `<div class="contact-photo-wrap"><div class="contact-photo-placeholder"><span>${initials}</span><div class="contact-info-overlay"><div class="contact-status">${c.status}</div><div class="contact-name">${c.name}</div><div class="contact-role">${c.role}</div></div></div></div>`;
+
+  return `
+    <div class="contact-card">
+      ${photoHtml}
+      <div class="contact-actions">
+        <a class="contact-action-btn" href="mailto:${c.email}?subject=Closeout Package Inquiry — ${encodeURIComponent(CONFIG.projectName)}">
+          <span>Send me an Email</span>
+          <span class="link-icon">${ICONS.emailAction}</span>
+        </a>
+        <button class="contact-action-btn" onclick="openContactModal()">
+          <span>Save Contact Info</span>
+          <span class="link-icon">${ICONS.saveContact}</span>
+        </button>
+      </div>
+    </div>`;
+}
+
+function buildImageCard(section) {
+  const bg = section.image
+    ? `url('${section.image}') center/cover no-repeat`
+    : `linear-gradient(135deg,#221e16,#1a1610)`;
+
+  return `
+    <div class="card" style="padding:0;overflow:hidden;position:relative;min-height:260px;display:flex;flex-direction:column;justify-content:flex-end;background:${bg};">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(10,16,16,0.92) 0%, rgba(10,16,16,0.3) 50%, transparent 100%);border-radius:var(--radius);"></div>
+      <div style="position:relative;z-index:1;padding:20px 24px 0;">
+        <div style="font-family:var(--font-display);font-size:22px;font-weight:500;color:#fff;margin-bottom:2px;">${section.title}</div>
+      </div>
+      <a class="link-item" href="${section.downloadUrl}" target="_blank" style="position:relative;z-index:1;padding:14px 24px;border-top:1px solid rgba(255,255,255,0.12);margin-top:12px;">
+        <span class="link-text">${section.downloadText}</span>
+        <span class="link-icon">${ICONS.download}</span>
+      </a>
+    </div>`;
+}
+
+function render() {
+  const main = document.getElementById('mainContent');
+  const topRightSections = CONFIG.sections.filter(s => s.position === 'top-right');
+  const bottomSections = CONFIG.sections.filter(s => s.position === 'bottom');
+
+  let html = '';
+
+  // Top row: Hero + top-right card
+  html += '<div class="top-row">';
+  html += buildHero();
+  if (topRightSections.length > 0) {
+    html += topRightSections.map(s => {
+      if (s.type === 'links') return buildLinkCard(s);
+      return '';
+    }).join('');
+  }
+  html += '</div>';
+
+  // Bottom row
+  html += '<div class="bottom-row">';
+  bottomSections.forEach(s => {
+    if (s.type === 'contact') html += buildContactCard();
+    else if (s.type === 'links') html += buildLinkCard(s);
+    else if (s.type === 'image') html += buildImageCard(s);
+  });
+  html += '</div>';
+
+  // Scroll hint
+  html += `<div class="scroll-hint" onclick="window.scrollBy({top:300,behavior:'smooth'})">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    Scroll for more
+  </div>`;
+
+  main.innerHTML = html;
+}
+
+
+// ╔════════════════════════════════════════════════════════════╗
+// ║  SEARCH ENGINE                                            ║
+// ╚════════════════════════════════════════════════════════════╝
+
+function buildSearchIndex() {
+  const index = [];
+
+  CONFIG.sections.forEach(section => {
+    if (section.links) {
+      section.links.forEach(link => {
+        index.push({
+          title: link.text,
+          category: section.title,
+          url: link.url,
+          type: link.type,
+          keywords: link.text.toLowerCase(),
+        });
+      });
+    }
+
+    if (section.type === 'image' && section.downloadUrl) {
+      index.push({
+        title: section.downloadText || section.title,
+        category: section.title,
+        url: section.downloadUrl,
+        type: 'external',
+        keywords: (section.title + ' ' + (section.downloadText || '')).toLowerCase(),
+      });
+    }
+  });
+
+  // Add contact to search
+  const c = CONFIG.contact;
+  index.push({
+    title: `${c.name} — ${c.role}`,
+    category: 'Contact',
+    url: '#contact',
+    type: 'contact',
+    keywords: `${c.name} ${c.role} ${c.email} ${c.company} contact`.toLowerCase(),
+  });
+
+  // Add project name
+  index.push({
+    title: CONFIG.projectName,
+    category: 'Project',
+    url: '#top',
+    type: 'internal',
+    keywords: CONFIG.projectName.toLowerCase(),
+  });
+
+  return index;
+}
+
+let searchIndex = [];
+
+function initSearch() {
+  searchIndex = buildSearchIndex();
+  const input = document.getElementById('searchInput');
+  const results = document.getElementById('searchResults');
+
+  input.addEventListener('input', (e) => {
+    const query = e.target.value.trim().toLowerCase();
+
+    if (!query) {
+      results.classList.remove('active');
+      return;
+    }
+
+    // Split query into words for fuzzy matching
+    const words = query.split(/\s+/);
+    const matches = searchIndex.filter(item => {
+      return words.every(word => item.keywords.includes(word));
+    });
+
+    if (matches.length === 0) {
+      // Try partial / fuzzy matching
+      const fuzzyMatches = searchIndex.filter(item => {
+        return words.some(word => item.keywords.includes(word));
+      });
+
+      if (fuzzyMatches.length > 0) {
+        showResults(fuzzyMatches);
+      } else {
+        results.innerHTML = '<div class="search-no-results">No results found</div>';
+        results.classList.add('active');
+      }
+    } else {
+      showResults(matches);
+    }
+  });
+
+  input.addEventListener('focus', () => {
+    if (input.value.trim()) input.dispatchEvent(new Event('input'));
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.search-wrapper')) {
+      results.classList.remove('active');
+    }
+  });
+}
+
+function showResults(matches) {
+  const results = document.getElementById('searchResults');
+
+  results.innerHTML = matches.map(m => `
+    <div class="search-result-item" onclick="handleSearchClick('${m.url}', '${m.type}')">
+      <div class="result-title">${m.title}</div>
+      <div class="result-category">${m.category}</div>
+    </div>`).join('');
+
+  results.classList.add('active');
+}
+
+function handleSearchClick(url, type) {
+  document.getElementById('searchResults').classList.remove('active');
+  document.getElementById('searchInput').value = '';
+
+  if (type === 'contact') {
+    openContactModal();
+  } else if (url.startsWith('#')) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (url.startsWith('mailto:')) {
+    window.location.href = url;
+  } else {
+    window.open(url, '_blank');
+  }
+}
+
+
+// ╔════════════════════════════════════════════════════════════╗
+// ║  CONTACT MODAL & vCARD                                    ║
+// ╚════════════════════════════════════════════════════════════╝
+
+function openContactModal() {
+  const c = CONFIG.contact;
+  document.getElementById('modalName').textContent = c.name;
+  document.getElementById('modalRole').textContent = c.role;
+
+  const fields = [
+    { label: 'Email', value: `<a href="mailto:${c.email}">${c.email}</a>` },
+    { label: 'Phone', value: `<a href="tel:${c.phone}">${c.phone}</a>` },
+    { label: 'Company', value: c.company },
+  ];
+  if (c.website) {
+    fields.push({ label: 'Website', value: `<a href="${c.website}" target="_blank">${c.website.replace(/^https?:\/\//, '')}</a>` });
+  }
+
+  document.getElementById('modalFields').innerHTML = fields.map(f => `
+    <div class="modal-field">
+      <label>${f.label}</label>
+      <span>${f.value}</span>
+    </div>`).join('');
+
+  document.getElementById('contactModal').classList.add('active');
+}
+
+function closeContactModal() {
+  document.getElementById('contactModal').classList.remove('active');
+}
+
+function downloadVCard() {
+  const c = CONFIG.contact;
+  const names = c.name.split(' ');
+  const lastName = names.pop();
+  const firstName = names.join(' ');
+
+  const vcard = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    `FN:${c.name}`,
+    `N:${lastName};${firstName};;;`,
+    `ORG:${c.company}`,
+    `TITLE:${c.role}`,
+    `EMAIL;TYPE=WORK:${c.email}`,
+    `TEL;TYPE=WORK:${c.phone}`,
+    c.website ? `URL:${c.website}` : '',
+    'END:VCARD'
+  ].filter(Boolean).join('\n');
+
+  const blob = new Blob([vcard], { type: 'text/vcard' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${c.name.replace(/\s+/g, '_')}.vcf`;
+  a.click();
+  URL.revokeObjectURL(url);
+  closeContactModal();
+}
+
+// Close modal on overlay click
+document.getElementById('contactModal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeContactModal();
+});
+
+// Close modal on Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeContactModal(); closeVideoModal(); }
+});
+
+// ── Video Modal ──────────────────────────────────────────────
+function openVideoModal(title, url) {
+  document.getElementById('videoModalTitle').textContent = title;
+
+  let playerHtml;
+  const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?]+)/);
+  const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+
+  if (ytMatch) {
+    playerHtml = `<iframe src="https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&rel=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;
+  } else if (vimeoMatch) {
+    playerHtml = `<iframe src="https://player.vimeo.com/video/${vimeoMatch[1]}?autoplay=1" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;
+  } else if (/\.(mp4|webm|ogg|mov)(\?|$)/i.test(url)) {
+    // Direct video file (e.g. Supabase hosted MP4)
+    playerHtml = `<video src="${url}" controls autoplay playsinline style="background:#000;"></video>`;
+  } else {
+    playerHtml = `<iframe src="${url}" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;
+  }
+
+  document.getElementById('videoModalPlayer').innerHTML = playerHtml;
+  document.getElementById('videoModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeVideoModal() {
+  document.getElementById('videoModal').classList.remove('active');
+  document.getElementById('videoModalPlayer').innerHTML = '';  // stops playback
+  document.body.style.overflow = '';
+}
+
+document.getElementById('videoModal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeVideoModal();
+});
+
+
+// ╔════════════════════════════════════════════════════════════╗
+// ║  INIT                                                     ║
+// ╚════════════════════════════════════════════════════════════╝
+
+document.title = `${CONFIG.projectName} — Closeout Package`;
+render();
+initSearch();
+</script>
+
+</body>
+</html>
