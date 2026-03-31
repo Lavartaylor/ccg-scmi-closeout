@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sorenson Center for Medical Innovation — Closeout Package</title>
+<meta name="theme-color" content="#0D1414">
 <link rel="icon" type="image/png" href="https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/sign/make-5cf288b6-ccg-assets/company/ccg-logo.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lODgyNTIxOC01YzI4LTQ2ZTItYjBjMS04ZmE4ZWMzZWUyNDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYWtlLTVjZjI4OGI2LWNjZy1hc3NldHMvY29tcGFueS9jY2ctbG9nby5wbmciLCJpYXQiOjE3NzQ5MDM3NDQsImV4cCI6MTkwMTA0Nzc0NH0.lvOwHxM_GAyRruJ4paluRcfRPP8hbxRxeVBmegYt87Y">
 <meta property="og:title" content="Sorenson Center for Medical Innovation — Closeout Package">
 <meta property="og:description" content="Everything you need for your new workspace — warranty information, care guides, adjustment videos, design documentation, and dedicated support.">
@@ -1278,13 +1279,14 @@ function setTheme(light) {
   document.body.classList.toggle('light', light);
   themeToggle.textContent = light ? '☾' : '☀';
   localStorage.setItem('ccg-theme', light ? 'light' : 'dark');
+  document.querySelector('meta[name="theme-color"]').content = light ? '#f5f8f8' : '#0D1414';
 }
 
 themeToggle.addEventListener('click', () => {
   setTheme(!document.body.classList.contains('light'));
 });
 
-// Restore saved preference
+// Default: dark mode. Only switch to light if user explicitly chose it.
 setTheme(localStorage.getItem('ccg-theme') === 'light');
 
 document.title = `${CONFIG.projectName} — Closeout Package`;
