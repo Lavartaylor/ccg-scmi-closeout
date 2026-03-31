@@ -196,15 +196,11 @@ body {
 .hero {
   border-radius: var(--radius);
   overflow: hidden;
+  position: relative;
   display: flex;
   flex-direction: column;
-}
-
-.hero-img {
-  position: relative;
-  height: 220px;
-  flex-shrink: 0;
-  overflow: hidden;
+  min-height: 420px;
+  border: 1px solid var(--border-color);
 }
 
 .hero-img-bg {
@@ -212,19 +208,29 @@ body {
   inset: 0;
   background-size: cover;
   background-position: center;
+  z-index: 0;
 }
 
-.hero-img-bg::after {
+/* Gradient: faint at top, stronger at bottom for text legibility */
+.hero::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 50%, rgba(13,20,20,0.35) 100%);
+  background: linear-gradient(to bottom, rgba(13,20,20,0.15) 0%, rgba(13,20,20,0.5) 55%, rgba(13,20,20,0.88) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-spacer {
+  flex: 1;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-text {
-  background: var(--bg-card);
-  padding: 24px 28px 28px;
-  border-top: 1px solid var(--border-color);
+  padding: 20px 28px 28px;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-tag {
@@ -254,14 +260,14 @@ body {
   font-weight: 500;
   line-height: 1.05;
   margin-bottom: 10px;
-  color: var(--text-title);
+  color: #EDE8DF;
 }
 
 .hero h1 em { font-style: italic; }
 
 .hero p {
   font-size: 14px;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.65);
   line-height: 1.6;
 }
 
@@ -914,7 +920,8 @@ function buildHero() {
 
   return `
     <div class="hero">
-      <div class="hero-img">${bgStyle}</div>
+      ${bgStyle}
+      <div class="hero-spacer"></div>
       <div class="hero-text">
         <div class="hero-tag">${CONFIG.projectName}</div>
         <h1>${styledTitle(CONFIG.heroTitle)}</h1>
