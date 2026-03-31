@@ -692,16 +692,26 @@ body.light {
   --bg-card: #ffffff;
   --bg-card-hover: #edf3f3;
   --text-primary: #0D1414;
+  --text-title: #1a2826;
   --text-secondary: #3a5b5a;
   --text-muted: #7a9e9c;
   --border-color: rgba(0,0,0,0.08);
-  --border-hover: rgba(255,255,255,0.12);
+  --border-hover: rgba(0,0,0,0.15);
   --shadow: 0 4px 32px rgba(0,0,0,0.08);
 }
 
 body.light .nav {
   background: rgba(245,248,248,0.92);
 }
+
+body.light .search-input { color: rgba(0,0,0,0.7); }
+body.light .search-input::placeholder { color: rgba(0,0,0,0.35); }
+body.light .search-input:focus { border-color: rgba(0,0,0,0.2); }
+body.light .search-icon { color: rgba(0,0,0,0.45); }
+body.light .theme-toggle { color: rgba(0,0,0,0.6); }
+body.light .hero p,
+body.light .hero-desc { color: rgba(0,0,0,0.55); }
+body.light .card-desc { color: rgba(0,0,0,0.5); }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 1100px) {
