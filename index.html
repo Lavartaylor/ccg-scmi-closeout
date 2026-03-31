@@ -1031,7 +1031,7 @@ function buildLinkCard(section) {
     if (link.type === 'emailModal') {
       const idx = EMAIL_MODALS.length;
       EMAIL_MODALS.push(link);
-      return `<button class="link-item" onclick="openEmailModal(${idx})" data-searchable>
+      return `<button class="link-item" onclick="handleEmailButton(${idx})" data-searchable>
         <span class="link-text">${link.text}</span>
         <span class="link-icon">${getLinkIcon('email')}</span>
       </button>`;
@@ -1337,7 +1337,18 @@ document.addEventListener('keydown', (e) => {
 // ── Email Modal ──────────────────────────────────────────────
 const EMAIL_MODALS = [];
 
-function openEmailModal(idx) {
+function handleEmailButton(idx) {
+  const m = EMAIL_MODALS[idx];
+  const mailtoUrl = `mailto:${m.email}?subject=${encodeURIComponent(m.subject)}&body=${encodeURIComponent(m.body)}`;
+  window.location.href = mailtoUrl;
+  // If the mail client opens, focus leaves the page — we do nothing.
+  // If nothing opens (no handler configured), focus stays — show the fallback modal.
+  setTimeout(() => {
+    if (document.hasFocus()) showEmailModal(idx);
+  }, 1500);
+}
+
+function showEmailModal(idx) {
   const m = EMAIL_MODALS[idx];
   const subject = encodeURIComponent(m.subject);
   const body = encodeURIComponent(m.body);
