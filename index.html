@@ -234,6 +234,10 @@ body {
 }
 
 .hero-tag {
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  z-index: 2;
   font-size: 11px;
   font-weight: 400;
   letter-spacing: 3px;
@@ -242,7 +246,6 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 14px;
 }
 
 .hero-tag::before {
@@ -921,9 +924,9 @@ function buildHero() {
   return `
     <div class="hero">
       ${bgStyle}
+      <div class="hero-tag">${CONFIG.projectName}</div>
       <div class="hero-spacer"></div>
       <div class="hero-text">
-        <div class="hero-tag">${CONFIG.projectName}</div>
         <h1>${styledTitle(CONFIG.heroTitle)}</h1>
         <p>${CONFIG.heroDescription}</p>
       </div>
