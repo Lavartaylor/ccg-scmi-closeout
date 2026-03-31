@@ -904,14 +904,6 @@ function getLinkIcon(type) {
   return ICONS[type] || ICONS.external;
 }
 
-function openMailto(url) {
-  const a = document.createElement('a');
-  a.href = url;
-  a.style.display = 'none';
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(() => document.body.removeChild(a), 100);
-}
 
 function styledTitle(title) {
   if (title.includes('\n')) {
@@ -954,10 +946,11 @@ function buildLinkCard(section) {
       </button>`;
     }
     if (link.type === 'email') {
-      return `<button class="link-item" onclick="openMailto('${link.url}')" data-searchable>
+      const safeHref = link.url.replace(/&/g, '&amp;');
+      return `<a class="link-item" href="${safeHref}" data-searchable>
         <span class="link-text">${link.text}</span>
         <span class="link-icon">${getLinkIcon('email')}</span>
-      </button>`;
+      </a>`;
     }
     return `<a class="link-item" href="${link.url}" target="_blank" rel="noopener" data-searchable>
       <span class="link-text">${link.text}</span>
