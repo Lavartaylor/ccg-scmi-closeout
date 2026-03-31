@@ -612,6 +612,55 @@ button.link-item {
 
 .btn-secondary:hover { background: var(--bg-card-hover); }
 
+/* ── EMAIL MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+  display: none; align-items: center; justify-content: center;
+  z-index: 1000; padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+.modal-panel {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1px solid var(--border-color); width: 100%; max-width: 480px;
+  overflow: hidden; box-shadow: var(--shadow);
+}
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px; border-bottom: 1px solid var(--border-color);
+}
+.modal-title { font-family: var(--font-display); font-size: 16px; font-weight: 500; color: var(--text-title); }
+.modal-close {
+  background: none; border: none; cursor: pointer; color: var(--text-muted);
+  font-size: 22px; line-height: 1; padding: 0 2px;
+}
+.modal-close:hover { color: var(--text-primary); }
+.modal-body { padding: 20px 22px; display: flex; flex-direction: column; gap: 16px; }
+.email-field { display: flex; flex-direction: column; gap: 6px; }
+.email-field label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); font-weight: 400; }
+.email-field-row { display: flex; align-items: center; gap: 10px; justify-content: space-between; }
+.email-field-row span { font-size: 14px; color: var(--text-primary); word-break: break-all; }
+.copy-btn {
+  background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px;
+  color: var(--text-secondary); font-size: 12px; padding: 4px 10px; cursor: pointer;
+  white-space: nowrap; flex-shrink: 0; font-family: var(--font-body);
+}
+.copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+.copy-btn.copied { color: #5a9e78; border-color: #5a9e78; }
+.copy-btn-full { align-self: flex-start; margin-top: 4px; }
+.email-body-area {
+  background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px;
+  color: var(--text-primary); font-family: var(--font-body); font-size: 13px;
+  padding: 12px 14px; resize: none; height: 140px; width: 100%; font-weight: 300;
+  line-height: 1.6;
+}
+.email-open-btn {
+  display: block; text-align: center; padding: 12px;
+  background: var(--accent); color: #fff; border-radius: var(--radius-sm);
+  text-decoration: none; font-size: 14px; font-weight: 400;
+  transition: background 0.2s;
+}
+.email-open-btn:hover { background: var(--accent-hover); }
+
 /* ── VIDEO MODAL ── */
 .video-modal-overlay {
   position: fixed;
@@ -762,6 +811,40 @@ body.light .card-desc { color: rgba(0,0,0,0.5); }
 <div class="main" id="mainContent"></div>
 
 <!-- ═══════════════════════════════════════════════════════════
+     EMAIL MODAL
+     ═══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="emailModal" onclick="if(event.target===this)closeEmailModal()">
+  <div class="modal-panel">
+    <div class="modal-header">
+      <span class="modal-title" id="emailModalTitle"></span>
+      <button class="modal-close" onclick="closeEmailModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="email-field">
+        <label>To</label>
+        <div class="email-field-row">
+          <span id="emailTo"></span>
+          <button class="copy-btn" onclick="copyField('emailTo',this)">Copy</button>
+        </div>
+      </div>
+      <div class="email-field">
+        <label>Subject</label>
+        <div class="email-field-row">
+          <span id="emailSubject"></span>
+          <button class="copy-btn" onclick="copyField('emailSubject',this)">Copy</button>
+        </div>
+      </div>
+      <div class="email-field">
+        <label>Message</label>
+        <textarea id="emailBody" class="email-body-area" readonly></textarea>
+        <button class="copy-btn copy-btn-full" onclick="copyField('emailBody',this)">Copy Message</button>
+      </div>
+      <a id="emailMailtoLink" class="email-open-btn" href="#">Open in Email App</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
      VIDEO MODAL
      ═══════════════════════════════════════════════════════════ -->
 <div class="video-modal-overlay" id="videoModal">
@@ -873,8 +956,8 @@ const CONFIG = {
       links: [
         { text: "Haworth Furniture Warranty", url: "https://www.haworth.com/content/dam/digital/north-american-assets/order-support/warranties/haworth-north-america-warranty.pdf", type: "external" },
         { text: "Tuohy Furniture Warranty", url: "https://ccghowells-my.sharepoint.com/:b:/g/personal/ltaylor_ccgslc_com/IQBVVv1KsJGeSpEBulf4Q2NlAbM6O-zIzTNOgGhnPfvcVN0?e=afZRjC", type: "external" },
-        { text: "Schedule Warranty Walk", url: "mailto:kmerrill@ccgslc.com?subject=Warranty%20Walk%20Request%20%E2%80%94%20Sorenson%20Center%20for%20Medical%20Innovation&body=Hi%20Kristy%2C%0A%0AI%E2%80%99d%20like%20to%20schedule%20a%20warranty%20walk%20for%20the%20Sorenson%20Center%20for%20Medical%20Innovation%20project.%0A%0APreferred%20dates%2Ftimes%3A%0A%0APlease%20let%20me%20know%20your%20availability.%0A%0AThank%20you%2C", type: "email" },
-        { text: "Submit Warranty Claim", url: "mailto:warranties@ccgslc.com?subject=Warranty%20Claim%20%E2%80%94%20Sorenson%20Center%20for%20Medical%20Innovation&body=Hi%2C%0A%0AI%20am%20submitting%20a%20warranty%20claim%20for%20the%20Sorenson%20Center%20for%20Medical%20Innovation%20project.%0A%0AItem%20%2F%20Furniture%3A%0ALocation%20in%20building%3A%0AIssue%20description%3A%0ADate%20issue%20was%20noticed%3A%0A%0AThank%20you%2C", type: "email" },
+        { text: "Schedule Warranty Walk", type: "emailModal", email: "kmerrill@ccgslc.com", subject: "Warranty Walk Request — Sorenson Center for Medical Innovation", body: "Hi Kristy,\n\nI'd like to schedule a warranty walk for the Sorenson Center for Medical Innovation project.\n\nPreferred dates/times:\n\nPlease let me know your availability.\n\nThank you," },
+        { text: "Submit Warranty Claim", type: "emailModal", email: "warranties@ccgslc.com", subject: "Warranty Claim — Sorenson Center for Medical Innovation", body: "Hi,\n\nI am submitting a warranty claim for the Sorenson Center for Medical Innovation project.\n\nItem / Furniture:\nLocation in building:\nIssue description:\nDate issue was noticed:\n\nThank you," },
       ]
     },
   ]
@@ -945,12 +1028,13 @@ function buildLinkCard(section) {
         <span class="link-icon">${getLinkIcon('videoLink')}</span>
       </button>`;
     }
-    if (link.type === 'email') {
-      const safeHref = link.url.replace(/&/g, '&amp;');
-      return `<a class="link-item" href="${safeHref}" data-searchable>
+    if (link.type === 'emailModal') {
+      const idx = EMAIL_MODALS.length;
+      EMAIL_MODALS.push(link);
+      return `<button class="link-item" onclick="openEmailModal(${idx})" data-searchable>
         <span class="link-text">${link.text}</span>
         <span class="link-icon">${getLinkIcon('email')}</span>
-      </a>`;
+      </button>`;
     }
     return `<a class="link-item" href="${link.url}" target="_blank" rel="noopener" data-searchable>
       <span class="link-text">${link.text}</span>
@@ -1249,6 +1333,36 @@ document.getElementById('contactModal').addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { closeContactModal(); closeVideoModal(); }
 });
+
+// ── Email Modal ──────────────────────────────────────────────
+const EMAIL_MODALS = [];
+
+function openEmailModal(idx) {
+  const m = EMAIL_MODALS[idx];
+  const subject = encodeURIComponent(m.subject);
+  const body = encodeURIComponent(m.body);
+  document.getElementById('emailModalTitle').textContent = m.text;
+  document.getElementById('emailTo').textContent = m.email;
+  document.getElementById('emailSubject').textContent = m.subject;
+  document.getElementById('emailBody').value = m.body;
+  document.getElementById('emailMailtoLink').href = `mailto:${m.email}?subject=${subject}&body=${body}`;
+  document.getElementById('emailModal').classList.add('active');
+}
+
+function closeEmailModal() {
+  document.getElementById('emailModal').classList.remove('active');
+}
+
+function copyField(id, btn) {
+  const el = document.getElementById(id);
+  const text = el.tagName === 'TEXTAREA' ? el.value : el.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  });
+}
 
 // ── Video Modal ──────────────────────────────────────────────
 function openVideoModal(title, url) {
