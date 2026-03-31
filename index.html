@@ -22,24 +22,26 @@
   --bg-card: #1a2224;
   --bg-card-hover: #222A2C;
   --text-primary: #ffffff;
-  --text-secondary: #9DB6B5;
+  --text-title: #EDE8DF;
+  --text-secondary: #A07060;
   --text-muted: #6a8886;
-  --accent: #537F7B;
-  --accent-secondary: #9DB6B5;
-  --accent-hover: #5e918d;
-  --border-color: rgba(83,127,123,0.2);
-  --border-hover: rgba(83,127,123,0.4);
+  --accent: #8B614F;
+  --accent-secondary: #A07060;
+  --accent-hover: #9A6A58;
+  --border-color: rgba(255,255,255,0.07);
+  --border-hover: rgba(255,255,255,0.12);
   --shadow: 0 4px 32px rgba(0,0,0,0.5);
-  --radius: 16px;
-  --radius-sm: 10px;
+  --radius: 22px;
+  --radius-sm: 14px;
   --font-display: 'the-seasons', Georgia, serif;
-  --font-body: 'neulis-neue', system-ui, sans-serif;
+  --font-body: 'Helvetica Neue LT Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
+  font-weight: 300;
   background: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
@@ -89,7 +91,7 @@ body {
   border: 1px solid var(--border-color);
   border-radius: 24px;
   padding: 8px 16px 8px 38px;
-  color: var(--text-primary);
+  color: rgba(255,255,255,0.6);
   font-size: 14px;
   width: 200px;
   outline: none;
@@ -99,18 +101,18 @@ body {
 
 .search-input:focus {
   width: 300px;
-  border-color: var(--accent);
+  border-color: rgba(255,255,255,0.25);
   background: var(--bg-card);
 }
 
-.search-input::placeholder { color: var(--text-muted); }
+.search-input::placeholder { color: rgba(255,255,255,0.35); }
 
 .search-icon {
   position: absolute;
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--text-muted);
+  color: rgba(255,255,255,0.8);
   pointer-events: none;
 }
 
@@ -163,7 +165,7 @@ body {
 .theme-toggle {
   background: none;
   border: none;
-  color: var(--text-secondary);
+  color: rgba(255,255,255,0.8);
   cursor: pointer;
   font-size: 20px;
   padding: 4px;
@@ -186,79 +188,75 @@ body {
 
 /* ── HERO ── */
 .hero {
-  position: relative;
   border-radius: var(--radius);
   overflow: hidden;
-  min-height: 380px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 40px;
 }
 
-.hero-bg {
+.hero-img {
+  position: relative;
+  height: 220px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.hero-img-bg {
   position: absolute;
   inset: 0;
   background-size: cover;
   background-position: center;
-  z-index: 0;
 }
 
-.hero-bg::after {
+.hero-img-bg::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(13,20,20,0.92) 0%, rgba(13,20,20,0.45) 50%, rgba(13,20,20,0.12) 100%);
+  background: linear-gradient(to bottom, transparent 50%, rgba(13,20,20,0.35) 100%);
 }
 
-.hero-content { position: relative; z-index: 1; }
+.hero-text {
+  background: var(--bg-card);
+  padding: 24px 28px 28px;
+  border-top: 1px solid var(--border-color);
+}
 
 .hero-tag {
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 400;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 16px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  margin-bottom: 14px;
 }
 
 .hero-tag::before {
   content: '';
+  flex-shrink: 0;
   width: 3px;
-  height: 20px;
+  height: 12px;
   background: var(--accent);
   border-radius: 2px;
 }
 
 .hero h1 {
   font-family: var(--font-display);
-  font-size: 42px;
+  font-size: 40px;
   font-weight: 500;
-  line-height: 1.15;
-  margin-bottom: 12px;
-  color: #fff;
+  line-height: 1.05;
+  margin-bottom: 10px;
+  color: var(--text-title);
 }
+
+.hero h1 em { font-style: italic; }
 
 .hero p {
   font-size: 14px;
-  color: var(--text-secondary);
-  max-width: 520px;
+  color: rgba(255,255,255,0.55);
   line-height: 1.6;
-}
-
-.hero-watermark {
-  position: absolute;
-  bottom: 20px;
-  right: 24px;
-  font-size: 48px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.06);
-  font-family: var(--font-display);
-  z-index: 1;
-  letter-spacing: 4px;
 }
 
 /* ── CARDS ── */
@@ -270,28 +268,29 @@ body {
 }
 
 .card-icon {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid rgba(83,127,123,0.4);
-  border-radius: 10px;
   margin-bottom: 16px;
   color: var(--accent);
-  font-size: 18px;
 }
 
 .card-title {
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 500;
+  line-height: 1.1;
   margin-bottom: 8px;
+  color: var(--text-title);
 }
+
+.card-title em { font-style: italic; }
 
 .card-desc {
   font-size: 13px;
-  color: var(--text-muted);
+  color: rgba(255,255,255,0.55);
   margin-bottom: 20px;
   line-height: 1.5;
 }
@@ -315,7 +314,7 @@ body {
 
 .link-item .link-text {
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .link-item .link-icon {
@@ -354,12 +353,32 @@ button.link-item {
   display: flex;
   flex-direction: column;
   position: relative;
+  min-height: 480px;
+}
+
+.contact-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70%;
+  background: linear-gradient(to top, rgba(13,20,20,0.92) 20%, rgba(13,20,20,0.6) 50%, transparent 100%);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .contact-photo-wrap {
-  position: relative;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.contact-spacer {
   flex: 1;
   min-height: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .contact-photo {
@@ -373,23 +392,19 @@ button.link-item {
 .contact-photo-placeholder {
   width: 100%;
   height: 100%;
-  min-height: 200px;
   background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card-hover));
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 64px;
   color: var(--text-muted);
-  position: relative;
 }
 
 .contact-info-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 20px;
-  background: linear-gradient(to top, rgba(13,20,20,0.97), rgba(13,20,20,0.3) 70%, transparent);
+  padding: 16px 20px 12px;
+  position: relative;
+  z-index: 1;
+  background: transparent;
 }
 
 .contact-status {
@@ -397,7 +412,7 @@ button.link-item {
   align-items: center;
   gap: 6px;
   font-size: 12px;
-  color: var(--accent);
+  color: #fff;
   margin-bottom: 6px;
 }
 
@@ -405,15 +420,20 @@ button.link-item {
   content: '';
   width: 8px;
   height: 8px;
-  background: var(--accent);
+  background: #4ade80;
   border-radius: 50%;
 }
 
 .contact-name {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 28px;
   font-weight: 500;
-  color: #fff;
+  line-height: 1.1;
+  color: var(--text-title);
+}
+
+.contact-name em {
+  font-style: italic;
 }
 
 .contact-role {
@@ -423,7 +443,9 @@ button.link-item {
 
 .contact-actions {
   padding: 0 20px 20px;
-  margin-top: auto;
+  position: relative;
+  z-index: 1;
+  background: transparent;
 }
 
 .contact-action-btn {
@@ -435,6 +457,7 @@ button.link-item {
   cursor: pointer;
   color: var(--text-primary);
   font-size: 14px;
+  font-weight: 300;
   background: none;
   border-left: none;
   border-right: none;
@@ -447,10 +470,12 @@ button.link-item {
 
 .contact-action-btn:first-child { border-top: none; margin-top: 8px; }
 .contact-action-btn:hover { color: var(--accent); }
+.contact-action-btn:hover .link-icon { color: var(--accent); }
 
 .contact-action-btn .link-icon {
   font-size: 14px;
   color: var(--text-muted);
+  transition: color 0.2s;
 }
 
 /* ── SCROLL HINT ── */
@@ -534,7 +559,7 @@ button.link-item {
 }
 
 .modal-field a {
-  color: var(--accent);
+  color: var(--text-primary);
   text-decoration: none;
 }
 
@@ -655,6 +680,24 @@ button.link-item {
   background: linear-gradient(to top, rgba(13,20,20,0.92) 0%, rgba(13,20,20,0.3) 60%, rgba(13,20,20,0.1) 100%);
 }
 
+/* ── LIGHT MODE ── */
+body.light {
+  --bg-primary: #f5f8f8;
+  --bg-secondary: #e8efef;
+  --bg-card: #ffffff;
+  --bg-card-hover: #edf3f3;
+  --text-primary: #0D1414;
+  --text-secondary: #3a5b5a;
+  --text-muted: #7a9e9c;
+  --border-color: rgba(0,0,0,0.08);
+  --border-hover: rgba(255,255,255,0.12);
+  --shadow: 0 4px 32px rgba(0,0,0,0.08);
+}
+
+body.light .nav {
+  background: rgba(245,248,248,0.92);
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1100px) {
   .bottom-row { grid-template-columns: 1fr 1fr; }
@@ -734,8 +777,8 @@ const CONFIG = {
   watermark: "",   // Building images already carry VCBO attribution
 
   // ── Project Info ──
-  projectName: "JAMES LeVOY SORENSON CENTER FOR MEDICAL INNOVATION",
-  heroTitle: "Welcome to Your\nCloseout Package",
+  projectName: "Sorenson Center for Medical Innovation",
+  heroTitle: "Closeout Package",
   heroDescription: "Everything you need for your new workspace — warranty information, care guides, adjustment videos, design documentation, and dedicated support.",
   heroImage: "https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/sign/make-5cf288b6-ccg-assets/projects/project-scmi-photo-3.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lODgyNTIxOC01YzI4LTQ2ZTItYjBjMS04ZmE4ZWMzZWUyNDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYWtlLTVjZjI4OGI2LWNjZy1hc3NldHMvcHJvamVjdHMvcHJvamVjdC1zY21pLXBob3RvLTMuanBnIiwiaWF0IjoxNzc0OTA4NzY3LCJleHAiOjE4MDY0NDQ3Njd9.mV7Can78ngP6gWs9c9sckN3RaoNz49sHFnAmaE8FImA",
 
@@ -744,7 +787,7 @@ const CONFIG = {
     name: "Kristy Merrill",
     role: "Director of Key Accounts",
     status: "Available",
-    photo: "https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/sign/make-5cf288b6-ccg-assets/team/team-kristy-merrill.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lODgyNTIxOC01YzI4LTQ2ZTItYjBjMS04ZmE4ZWMzZWUyNDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYWtlLTVjZjI4OGI2LWNjZy1hc3NldHMvdGVhbS90ZWFtLWtyaXN0eS1tZXJyaWxsLnBuZyIsImlhdCI6MTc3NDkwODgwMiwiZXhwIjoxODA2NDQ0ODAyfQ.ryqS4gG4E4sUyUZ7nc5uWexHdjFgmS2xF8QwTnfsVq4",
+    photo: "https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/sign/make-5cf288b6-ccg-assets/team/team-kristy-merrill.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lODgyNTIxOC01YzI4LTQ2ZTItYjBjMS04ZmE4ZWMzZWUyNDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYWtlLTVjZjI4OGI2LWNjZy1hc3NldHMvdGVhbS90ZWFtLWtyaXN0eS1tZXJyaWxsLnBuZyIsImlhdCI6MTc3NDk3MTkwMiwiZXhwIjoxODA2NTA3OTAyfQ.G4q1TxEy__w8PpXsnm30AIirX3AyAJi3Pdpd_uiL4cc",
     email: "kmerrill@ccgslc.com",
     phone: "408-600-2788",
     company: "CCG",
@@ -781,7 +824,8 @@ const CONFIG = {
       position: "bottom",
       links: [
         { text: "Fern Chair — Seat Adjustments", url: "https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/public/Videos/haworth_-_fern_chair_-_seat_adjustments%20(720p).mp4", type: "video" },
-        { text: "Height-Adjustable Desk Guide", url: "https://vimeo.com/1002767009", type: "video" },
+        { text: "Height-Adjustable Desk Guide", url: "https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/public/Videos/haworth_upside_hat_adjustment_video%20(720p).mp4", type: "video" },
+        { text: "Desk with Non-Programmable Paddle", url: "https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/public/Videos/haworth_upside_desk_with_non-programmable_paddle_-_user_instructions%20(1080p).mp4", type: "video" },
       ]
     },
 
@@ -818,14 +862,16 @@ const CONFIG = {
 // ╚════════════════════════════════════════════════════════════╝
 
 const ICONS = {
-  care: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12h6M12 9v6"/></svg>`,
-  video: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg>`,
-  download: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>`,
-  warranty: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>`,
-  external: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>`,
-  internal: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
-  video: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16"/></svg>`,
-  email: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>`,
+  // ── Card header icons (28px, open stroke) ──
+  care:        `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>`,
+  video:       `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>`,
+  download:    `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>`,
+  warranty:    `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+  // ── Link button icons (14px) ──
+  external:    `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>`,
+  internal:    `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
+  videoLink:   `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16"/></svg>`,
+  email:       `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>`,
   emailAction: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>`,
   saveContact: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>`,
 };
@@ -834,22 +880,31 @@ function getLinkIcon(type) {
   return ICONS[type] || ICONS.external;
 }
 
+function styledTitle(title) {
+  if (title.includes('\n')) {
+    const parts = title.split('\n');
+    const last = parts.pop();
+    return parts.join('<br>') + '<br><em>' + last + '</em>';
+  }
+  const words = title.split(' ');
+  if (words.length <= 1) return title;
+  const last = words.pop();
+  return words.join(' ') + ' <em>' + last + '</em>';
+}
+
 function buildHero() {
   const bgStyle = CONFIG.heroImage
-    ? `<div class="hero-bg" style="background-image:url('${CONFIG.heroImage}')"></div>`
-    : `<div class="hero-placeholder"></div>`;
-
-  const titleHtml = CONFIG.heroTitle.replace(/\n/g, '<br>');
+    ? `<div class="hero-img-bg" style="background-image:url('${CONFIG.heroImage}')"></div>`
+    : `<div class="hero-img-bg" style="background:var(--bg-secondary)"></div>`;
 
   return `
     <div class="hero">
-      ${bgStyle}
-      <div class="hero-content">
+      <div class="hero-img">${bgStyle}</div>
+      <div class="hero-text">
         <div class="hero-tag">${CONFIG.projectName}</div>
-        <h1>${titleHtml}</h1>
+        <h1>${styledTitle(CONFIG.heroTitle)}</h1>
         <p>${CONFIG.heroDescription}</p>
       </div>
-      <div class="hero-watermark">${CONFIG.watermark}</div>
     </div>`;
 }
 
@@ -861,7 +916,7 @@ function buildLinkCard(section) {
     if (link.type === 'video') {
       return `<button class="link-item" onclick="openVideoModal('${link.text.replace(/'/g,"\\'")}','${link.url}')" data-searchable>
         <span class="link-text">${link.text}</span>
-        <span class="link-icon">${getLinkIcon('video')}</span>
+        <span class="link-icon">${getLinkIcon('videoLink')}</span>
       </button>`;
     }
     return `<a class="link-item" href="${link.url}" target="${link.type === 'email' ? '_self' : '_blank'}" rel="noopener" data-searchable>
@@ -873,10 +928,17 @@ function buildLinkCard(section) {
   return `
     <div class="card">
       <div class="card-icon">${iconHtml}</div>
-      <h2 class="card-title">${section.title}</h2>
+      <h2 class="card-title">${styledTitle(section.title)}</h2>
       ${descHtml}
       <div class="link-list">${linksHtml}</div>
     </div>`;
+}
+
+function styledContactName(name) {
+  const parts = name.trim().split(' ');
+  if (parts.length < 2) return name;
+  const last = parts.pop();
+  return parts.join(' ') + ' <em>' + last + '</em>';
 }
 
 function buildContactCard() {
@@ -884,12 +946,14 @@ function buildContactCard() {
   const initials = c.name.split(' ').map(n => n[0]).join('');
 
   const photoHtml = c.photo
-    ? `<div class="contact-photo-wrap"><img class="contact-photo" src="${c.photo}" alt="${c.name}"><div class="contact-info-overlay"><div class="contact-status">${c.status}</div><div class="contact-name">${c.name}</div><div class="contact-role">${c.role}</div></div></div>`
-    : `<div class="contact-photo-wrap"><div class="contact-photo-placeholder"><span>${initials}</span><div class="contact-info-overlay"><div class="contact-status">${c.status}</div><div class="contact-name">${c.name}</div><div class="contact-role">${c.role}</div></div></div></div>`;
+    ? `<div class="contact-photo-wrap"><img class="contact-photo" src="${c.photo}" alt="${c.name}"></div>`
+    : `<div class="contact-photo-wrap"><div class="contact-photo-placeholder"><span>${initials}</span></div></div>`;
 
   return `
     <div class="contact-card">
       ${photoHtml}
+      <div class="contact-spacer"></div>
+      <div class="contact-info-overlay"><div class="contact-status">${c.status}</div><div class="contact-name">${styledContactName(c.name)}</div><div class="contact-role">${c.role}</div></div>
       <div class="contact-actions">
         <a class="contact-action-btn" href="mailto:${c.email}?subject=Closeout Package Inquiry — ${encodeURIComponent(CONFIG.projectName)}">
           <span>Send me an Email</span>
@@ -909,10 +973,10 @@ function buildImageCard(section) {
     : `linear-gradient(135deg,#221e16,#1a1610)`;
 
   return `
-    <div class="card" style="padding:0;overflow:hidden;position:relative;min-height:260px;display:flex;flex-direction:column;justify-content:flex-end;background:${bg};">
-      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(10,16,16,0.92) 0%, rgba(10,16,16,0.3) 50%, transparent 100%);border-radius:var(--radius);"></div>
+    <div class="card" style="padding:0;overflow:hidden;position:relative;min-height:260px;display:flex;flex-direction:column;justify-content:flex-end;background:${bg};border:none;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(10,16,16,0.95) 0%, rgba(10,16,16,0.55) 55%, rgba(10,16,16,0.15) 100%);"></div>
       <div style="position:relative;z-index:1;padding:20px 24px 0;">
-        <div style="font-family:var(--font-display);font-size:22px;font-weight:500;color:#fff;margin-bottom:2px;">${section.title}</div>
+        <div style="font-family:var(--font-display);font-size:22px;font-weight:500;color:#fff;margin-bottom:2px;">${styledTitle(section.title)}</div>
       </div>
       <a class="link-item" href="${section.downloadUrl}" target="_blank" style="position:relative;z-index:1;padding:14px 24px;border-top:1px solid rgba(255,255,255,0.12);margin-top:12px;">
         <span class="link-text">${section.downloadText}</span>
@@ -948,11 +1012,6 @@ function render() {
   });
   html += '</div>';
 
-  // Scroll hint
-  html += `<div class="scroll-hint" onclick="window.scrollBy({top:300,behavior:'smooth'})">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-    Scroll for more
-  </div>`;
 
   main.innerHTML = html;
 }
@@ -1196,6 +1255,22 @@ document.getElementById('videoModal').addEventListener('click', (e) => {
 // ╔════════════════════════════════════════════════════════════╗
 // ║  INIT                                                     ║
 // ╚════════════════════════════════════════════════════════════╝
+
+// ── Theme Toggle ────────────────────────────────────
+const themeToggle = document.getElementById('themeToggle');
+
+function setTheme(light) {
+  document.body.classList.toggle('light', light);
+  themeToggle.textContent = light ? '☾' : '☀';
+  localStorage.setItem('ccg-theme', light ? 'light' : 'dark');
+}
+
+themeToggle.addEventListener('click', () => {
+  setTheme(!document.body.classList.contains('light'));
+});
+
+// Restore saved preference
+setTheme(localStorage.getItem('ccg-theme') === 'light');
 
 document.title = `${CONFIG.projectName} — Closeout Package`;
 render();
