@@ -96,13 +96,18 @@ body {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 24px;
-  padding: 8px 16px 8px 38px;
+  padding: 9px 16px 9px 38px;
+  height: auto;
+  line-height: 1;
   color: rgba(255,255,255,0.6);
   font-size: 14px;
   width: 200px;
   outline: none;
   transition: all 0.3s;
   font-family: var(--font-body);
+  box-sizing: border-box;
+  vertical-align: middle;
+  -webkit-appearance: none;
 }
 
 .search-input:focus {
@@ -162,11 +167,35 @@ body {
 }
 
 .search-no-results {
-  padding: 24px 16px;
+  padding: 20px 16px;
   text-align: center;
-  color: var(--text-muted);
-  font-size: 14px;
 }
+.search-no-results p {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.search-no-results .search-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: 13px;
+  line-height: 1;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  -webkit-appearance: none;
+}
+.search-no-results .search-contact-btn svg { display: block; }
+.search-no-results .search-contact-btn:hover { opacity: 0.85; }
 
 .theme-toggle {
   background: none;
@@ -280,6 +309,18 @@ body {
   border-radius: var(--radius);
   padding: 32px;
   border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: scale(1.015);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
+
+.card .link-list {
+  margin-top: auto;
+  padding-top: 20px;
 }
 
 .card-icon {
@@ -335,8 +376,9 @@ body {
 .link-item .link-icon {
   font-size: 14px;
   color: var(--text-muted);
-  transition: color 0.2s;
+  transition: color 0.2s, transform 0.2s ease;
 }
+.link-item:hover .link-icon { transform: scale(1.25); }
 
 .link-item:hover .link-icon { color: var(--accent); }
 
@@ -772,9 +814,88 @@ body.light .hero p,
 body.light .hero-desc { color: rgba(0,0,0,0.55); }
 body.light .card-desc { color: rgba(0,0,0,0.5); }
 
+/* ── INTRO ANIMATION ── */
+#intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 32px;
+  pointer-events: none;
+  transition: opacity 0.9s ease;
+  box-sizing: border-box;
+}
+#intro-headline {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  line-height: 1.1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1em;
+}
+.intro-line {
+  display: block;
+  white-space: nowrap;
+}
+.intro-line.italic-line { font-style: italic; }
+#intro-sub {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.6vw, 20px);
+  color: rgba(255,255,255,0.4);
+  font-weight: 300;
+  text-align: center;
+  max-width: min(600px, 80vw);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+@keyframes wordFadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.w {
+  display: inline-block;
+  opacity: 0;
+  animation: wordFadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+.intro-hidden {
+  opacity: 0 !important;
+  transform: translateY(18px) !important;
+  transition: none !important;
+}
+
+/* ── FULL-WIDTH ROW ── */
+.full-row { width: 100%; }
+.card-full { width: 100%; box-sizing: border-box; }
+.link-list-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 4px;
+}
+.link-list-grid .link-item {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-right: 1px solid rgba(255,255,255,0.08);
+  border-bottom: none;
+  padding: 16px 20px;
+  margin: 0;
+}
+.link-list-grid .link-item:last-child { border-right: none; }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1100px) {
   .bottom-row { grid-template-columns: 1fr 1fr; }
+  .link-list-grid { grid-template-columns: 1fr 1fr; }
+  .link-list-grid .link-item:nth-child(even) { border-right: none; }
+  .link-list-grid .link-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.08); }
 }
 
 @media (max-width: 768px) {
@@ -808,6 +929,13 @@ body.light .card-desc { color: rgba(0,0,0,0.5); }
 <!-- ═══════════════════════════════════════════════════════════
      MAIN CONTENT — Built dynamically from CONFIG
      ═══════════════════════════════════════════════════════════ -->
+<div id="intro-screen">
+  <div id="intro-headline">
+    <div class="intro-line" id="intro-line1"></div>
+    <div class="intro-line italic-line" id="intro-line2"></div>
+  </div>
+  <div id="intro-sub"></div>
+</div>
 <div class="main" id="mainContent"></div>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -956,6 +1084,7 @@ const CONFIG = {
       links: [
         { text: "Haworth Furniture Warranty", url: "https://www.haworth.com/content/dam/digital/north-american-assets/order-support/warranties/haworth-north-america-warranty.pdf", type: "external" },
         { text: "Tuohy Furniture Warranty", url: "https://ccghowells-my.sharepoint.com/:b:/g/personal/ltaylor_ccgslc_com/IQBVVv1KsJGeSpEBulf4Q2NlAbM6O-zIzTNOgGhnPfvcVN0?e=afZRjC", type: "external" },
+        { text: "CCG Aftercare Program", url: "https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/public/pdfs/ccg-aftercare-program.pdf", type: "external" },
         { text: "Schedule Warranty Walk", type: "emailModal", email: "kmerrill@ccgslc.com", subject: "Warranty Walk Request — Sorenson Center for Medical Innovation", body: "Hi Kristy,\n\nI'd like to schedule a warranty walk for the Sorenson Center for Medical Innovation project.\n\nPreferred dates/times:\n\nPlease let me know your availability.\n\nThank you," },
         { text: "Submit Warranty Claim", type: "emailModal", email: "warranties@ccgslc.com", subject: "Warranty Claim — Sorenson Center for Medical Innovation", body: "Hi,\n\nI am submitting a warranty claim for the Sorenson Center for Medical Innovation project.\n\nItem / Furniture:\nLocation in building:\nIssue description:\nDate issue was noticed:\n\nThank you," },
       ]
@@ -1017,7 +1146,7 @@ function buildHero() {
     </div>`;
 }
 
-function buildLinkCard(section) {
+function buildLinkCard(section, fullWidth = false) {
   const iconHtml = ICONS[section.icon] || '';
   const descHtml = section.description ? `<p class="card-desc">${section.description}</p>` : '';
 
@@ -1042,12 +1171,22 @@ function buildLinkCard(section) {
     </a>`;
   }).join('');
 
-  return `
-    <div class="card">
+  const headerHtml = fullWidth ? `
+      <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px;">
+        <div class="card-icon" style="margin-bottom:0;flex-shrink:0;">${iconHtml}</div>
+        <div>
+          <h2 class="card-title" style="margin-bottom:4px;">${styledTitle(section.title)}</h2>
+          ${descHtml}
+        </div>
+      </div>` : `
       <div class="card-icon">${iconHtml}</div>
       <h2 class="card-title">${styledTitle(section.title)}</h2>
-      ${descHtml}
-      <div class="link-list">${linksHtml}</div>
+      ${descHtml}`;
+
+  return `
+    <div class="card${fullWidth ? ' card-full' : ''}">
+      ${headerHtml}
+      <div class="link-list${fullWidth ? ' link-list-grid' : ''}">${linksHtml}</div>
     </div>`;
 }
 
@@ -1106,6 +1245,7 @@ function render() {
   const main = document.getElementById('mainContent');
   const topRightSections = CONFIG.sections.filter(s => s.position === 'top-right');
   const bottomSections = CONFIG.sections.filter(s => s.position === 'bottom');
+  const fullSections = CONFIG.sections.filter(s => s.position === 'full');
 
   let html = '';
 
@@ -1129,6 +1269,12 @@ function render() {
   });
   html += '</div>';
 
+  // Full-width row
+  fullSections.forEach(s => {
+    html += '<div class="full-row">';
+    if (s.type === 'links') html += buildLinkCard(s, true);
+    html += '</div>';
+  });
 
   main.innerHTML = html;
 }
@@ -1217,7 +1363,24 @@ function initSearch() {
       if (fuzzyMatches.length > 0) {
         showResults(fuzzyMatches);
       } else {
-        results.innerHTML = '<div class="search-no-results">No results found</div>';
+        const c = CONFIG.contact;
+        const searchTerm = e.target.value.trim();
+        const fallbackBody = `Hi ${c.name.split(' ')[0]},\n\nI was looking for information about "${searchTerm}" and couldn't find it.\n\nCould you help me find what I need?\n\nThank you,`;
+        // Push/update the fallback modal entry BEFORE rendering the button
+        const lastEntry = EMAIL_MODALS[EMAIL_MODALS.length - 1];
+        if (lastEntry && lastEntry._searchFallback) {
+          lastEntry.body = fallbackBody;
+        } else {
+          EMAIL_MODALS.push({ _searchFallback: true, email: c.email, subject: 'Question — Sorenson Center for Medical Innovation', body: fallbackBody, text: `Contact ${c.name.split(' ')[0]}` });
+        }
+        const btnIdx = EMAIL_MODALS.length - 1;
+        results.innerHTML = `<div class="search-no-results">
+          <p>Don't see what you're looking for? We're happy to help you find whatever you need.</p>
+          <button class="search-contact-btn" onclick="handleEmailButton(${btnIdx})">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Reach out to ${c.name.split(' ')[0]}
+          </button>
+        </div>`;
         results.classList.add('active');
       }
     } else {
@@ -1432,8 +1595,75 @@ themeToggle.addEventListener('click', () => {
 setTheme(localStorage.getItem('ccg-theme') === 'light');
 
 document.title = `${CONFIG.projectName} — Closeout Package`;
+
+// ── Intro word-by-word animation ──
 render();
 initSearch();
+
+const introScreen = document.getElementById('intro-screen');
+const introLine1  = document.getElementById('intro-line1');
+const introLine2  = document.getElementById('intro-line2');
+const introSub    = document.getElementById('intro-sub');
+
+// Hide all content cards immediately
+const animTargets = document.querySelectorAll('.card, .contact-card, .hero');
+animTargets.forEach(el => el.classList.add('intro-hidden'));
+
+// Build word spans with staggered animation-delay
+function buildWordSpans(words, startDelaySec, staggerSec) {
+  return words.map((word, i) =>
+    `<span class="w" style="animation-delay:${(startDelaySec + i * staggerSec).toFixed(2)}s">${word}</span>`
+  ).join(' ');
+}
+
+const WORD_DUR    = 0.7;   // animation duration per word
+const STAGGER     = 0.13;  // delay between words
+const LINE_GAP    = 0.25;  // extra pause before line 2
+
+const line1Words  = ['Welcome', 'to', 'Your'];
+const line2Words  = ['Closeout', 'Package'];
+const subWords    = "Here you'll find everything you need for your new space — care guides, warranty information, product documentation, and a direct line to your team.".split(' ');
+
+const line1End    = line1Words.length * STAGGER + WORD_DUR;
+const line2Start  = line1End - WORD_DUR + LINE_GAP;
+const line2End    = line2Start + line2Words.length * STAGGER + WORD_DUR;
+const subStart    = line2End - WORD_DUR + 0.3;
+const subEnd      = subStart + subWords.length * 0.07 + WORD_DUR;
+
+introLine1.innerHTML = buildWordSpans(line1Words, 0.3, STAGGER);
+introLine2.innerHTML = buildWordSpans(line2Words, 0.3 + line2Start, STAGGER);
+introSub.innerHTML   = buildWordSpans(subWords,   0.3 + subStart, 0.055);
+
+// After all words in, pause then dissipate
+const totalAnimTime = (0.3 + subEnd) * 1000;
+const PAUSE = 1400;
+
+setTimeout(() => {
+  // Dissipate text upward
+  const dissipate = (el, blur, dy) => {
+    el.style.transition = `opacity 1s ease, filter 1s ease, transform 1s ease`;
+    el.style.opacity   = '0';
+    el.style.filter    = `blur(${blur}px)`;
+    el.style.transform = `translateY(${dy}px)`;
+  };
+  dissipate(introLine1, 8, -14);
+  dissipate(introLine2, 8, -10);
+  dissipate(introSub,   4, -6);
+
+  // Fade out screen, scroll to top, stagger cards
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    introScreen.style.opacity = '0';
+    setTimeout(() => { introScreen.remove(); }, 900);
+
+    animTargets.forEach((el, i) => {
+      setTimeout(() => {
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        el.classList.remove('intro-hidden');
+      }, i * 120);
+    });
+  }, 800);
+}, totalAnimTime + PAUSE);
 </script>
 
 </body>
