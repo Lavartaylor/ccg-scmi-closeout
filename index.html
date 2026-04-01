@@ -1239,13 +1239,10 @@ function buildContactCard() {
 }
 
 function buildImageCard(section) {
-  const bg = section.image
-    ? `url('${section.image}') center/cover no-repeat`
-    : `linear-gradient(135deg,#221e16,#1a1610)`;
-
   return `
-    <div class="card" style="padding:0;overflow:hidden;position:relative;min-height:260px;display:flex;flex-direction:column;background:${bg};border:1px solid var(--border-color);">
-      <div style="position:absolute;inset:0;background:rgba(10,16,16,0.52);"></div>
+    <div class="card" style="padding:0;overflow:hidden;position:relative;min-height:260px;display:flex;flex-direction:column;background:var(--bg-card);border:1px solid var(--border-color);">
+      <div style="position:absolute;inset:0;${section.image ? `background:url('${section.image}') center/cover no-repeat` : `background:linear-gradient(135deg,#221e16,#1a1610)`};"></div>
+      <div style="position:absolute;inset:0;background:rgba(10,16,16,0.55);"></div>
       <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(10,16,16,0.45) 0%, transparent 40%, rgba(10,16,16,0.6) 100%);"></div>
       <div style="position:relative;z-index:1;padding:32px 32px 0;flex:1;">
         <div class="card-icon" style="margin-bottom:16px;">${ICONS.download}</div>
