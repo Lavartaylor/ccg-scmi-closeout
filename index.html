@@ -93,6 +93,11 @@ body {
   padding: 0 24px;
 }
 
+@media (max-width: 768px) {
+  .nav-center { display: none; }
+  .hero-tag { display: inline-flex !important; }
+}
+
 .nav-right {
   display: flex;
   align-items: center;
@@ -937,7 +942,7 @@ body.light .card-desc { color: rgba(0,0,0,0.5); }
      ═══════════════════════════════════════════════════════════ -->
 <nav class="nav">
   <div class="nav-logo" id="navLogo"><img src="ccg-logo.png" alt="CCG"></div>
-  <div class="nav-center">Sorenson Center for Medical Innovation</div>
+  <div class="nav-center">University of Utah — Sorenson Center for Medical Innovation</div>
   <div class="nav-right">
     <div class="search-wrapper">
       <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -1173,6 +1178,7 @@ function buildHero() {
   return `
     <div class="hero">
       ${bgStyle}
+      <div class="hero-tag" style="display:none;">${CONFIG.projectName}</div>
       <div class="hero-spacer"></div>
       <div class="hero-text">
         <h1>${styledTitle(CONFIG.heroTitle)}</h1>
