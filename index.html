@@ -399,6 +399,7 @@ button.link-item {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 24px;
+  margin-bottom: 24px;
 }
 
 /* ── CONTACT CARD ── */
@@ -1035,13 +1036,13 @@ const CONFIG = {
 
     // ── Care & Maintenance ──
     {
-      title: "Care & Maintenance",
+      title: "Care & <br>Maintenance",
       icon: "care",
       description: "Find care and maintenance guides for your Haworth and Tuohy furniture below.",
       type: "links",
       position: "top-right",
       links: [
-        { text: "Haworth Care & Maintenance Standards", url: "https://www.haworth.com/content/dam/digital/int/docs/products/_all/product-care_maintenance-guide_en.pdf", type: "external" },
+        { text: "Haworth Care & Maintenance Standards", url: "https://store.haworth.com/pages/assembly-user-guides", type: "external" },
       ]
     },
 
@@ -1053,7 +1054,7 @@ const CONFIG = {
 
     // ── Adjustment Guides ──
     {
-      title: "Adjustment Guides",
+      title: "Adjustment <br>Guides",
       icon: "video",
       type: "links",
       position: "bottom",
@@ -1073,6 +1074,20 @@ const CONFIG = {
       image: "https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/sign/make-5cf288b6-ccg-assets/projects/project-scmi-photo-1.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lODgyNTIxOC01YzI4LTQ2ZTItYjBjMS04ZmE4ZWMzZWUyNDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYWtlLTVjZjI4OGI2LWNjZy1hc3NldHMvcHJvamVjdHMvcHJvamVjdC1zY21pLXBob3RvLTEuanBnIiwiaWF0IjoxNzc0OTA4NzY3LCJleHAiOjE4MDY0NDQ3Njd9.Sx_3VPjXCAp2aBlfgVn4rNrrr4wRb3fduuE4PEov1R8",
       downloadUrl: "https://cmmgwekehrvewualuwmf.supabase.co/storage/v1/object/public/pdfs/scmi-design-package.pdf",
       downloadText: "Download Design Package",
+    },
+
+    // ── Product Documentation ──
+    {
+      title: "Product Documentation",
+      icon: "download",
+      position: "full",
+      type: "links",
+      description: "Installation guides, assembly instructions, and owner's manuals for your workspace products.",
+      links: [
+        { text: "Haworth Fern Chair — Assembly & User Guides", url: "https://store.haworth.com/pages/assembly-user-guides", type: "external" },
+        { text: "Haworth Upside Desk — Assembly Instructions", url: "https://www.haworth.com/content/dam/haworth-store/product/assembly-instructions/Upside%20Assembly%2061000167_1.pdf", type: "external" },
+        { text: "Haworth Upside Series — User Manual", url: "https://www.manualslib.com/manual/1855795/Haworth-Upside-Series.html", type: "external" },
+      ]
     },
 
     // ── Warranty Information ──
@@ -1229,15 +1244,19 @@ function buildImageCard(section) {
     : `linear-gradient(135deg,#221e16,#1a1610)`;
 
   return `
-    <div class="card" style="padding:0;overflow:hidden;position:relative;min-height:260px;display:flex;flex-direction:column;justify-content:flex-end;background:${bg};border:none;">
-      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(10,16,16,0.95) 0%, rgba(10,16,16,0.55) 55%, rgba(10,16,16,0.15) 100%);"></div>
-      <div style="position:relative;z-index:1;padding:20px 24px 0;">
-        <div style="font-family:var(--font-display);font-size:22px;font-weight:500;color:#fff;margin-bottom:2px;">${styledTitle(section.title)}</div>
+    <div class="card" style="padding:0;overflow:hidden;position:relative;min-height:260px;display:flex;flex-direction:column;background:${bg};border:1px solid var(--border-color);">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(10,16,16,0.82) 0%, rgba(10,16,16,0.3) 40%, rgba(10,16,16,0.75) 100%);"></div>
+      <div style="position:relative;z-index:1;padding:32px 32px 0;flex:1;">
+        <div class="card-icon" style="margin-bottom:16px;">${ICONS.download}</div>
+        <h2 class="card-title">${styledTitle(section.title)}</h2>
       </div>
-      <a class="link-item" href="${section.downloadUrl}" target="_blank" style="position:relative;z-index:1;padding:14px 24px;border-top:1px solid rgba(255,255,255,0.12);margin-top:12px;">
-        <span class="link-text">${section.downloadText}</span>
-        <span class="link-icon">${ICONS.download}</span>
-      </a>
+      <div style="position:relative;z-index:1;padding:0 32px 32px;">
+        <div style="border-top:1px solid rgba(255,255,255,0.12);margin-bottom:0;"></div>
+        <a class="link-item" href="${section.downloadUrl}" target="_blank" style="padding:14px 0;">
+          <span class="link-text">${section.downloadText}</span>
+          <span class="link-icon">${ICONS.external}</span>
+        </a>
+      </div>
     </div>`;
 }
 
